@@ -21,9 +21,7 @@
 ## 🧩 4. Mid 90s: COM and ActiveX
 
 - Microsoft created COM (Component Object Model) to share code across apps/languages.
-
-
-Hard to version, buggy, and deeply tied to Windows Registry.
+- Hard to version, buggy, and deeply tied to Windows Registry.
 
 > 🧠 Think of it as an early attempt at code reuse and plugins.
 
@@ -33,34 +31,28 @@ Hard to version, buggy, and deeply tied to Windows Registry.
 - Microsoft made J++, a modified Java — which led to legal trouble.
 - They needed their own modern, language-flexible, memory safe platform with cross-platform compatibility (like it should run on multiple OS).
 
-🚀 6. 2000–2002: Birth of .NET
-Microsoft built .NET Framework:
+## 🚀 6. 2000–2002: Birth of .NET
 
-CLR (Common Language Runtime) – Like Java’s JVM
+- Microsoft built .NET Framework:
+- CLR (Common Language Runtime) – Like Java’s JVM
+- C# – A new, modern language
+- ASP.NET, WinForms, WPF – For web and GUI apps
+- Garbage collection and memory safety baked in
 
-C# – A new, modern language
+> 🧠 It was Microsoft’s clean break from the past: safe, managed, and cross-language.
 
-ASP.NET, WinForms, WPF – For web and GUI apps
+## 🌐 7. 2016–Now: .NET Core → .NET 5+ (Modern .NET)
 
-Garbage collection and memory safety baked in
+- .NET was originally Windows-only.
+- Microsoft open-sourced and rebuilt it as .NET Core, then unified everything into .NET 5, 6, 7, 8…
+- Fully cross-platform: Windows, Linux, macOS
+- Can build:
+    Web apps (ASP.NET Core)
+    Desktop & mobile (MAUI, WPF, WinForms)
+    Games (Unity uses C#)
+    Browser apps (Blazor)
+    APIs and CLIs
 
-🧠 It was Microsoft’s clean break from the past: safe, managed, and cross-language.
-
-🌐 7. 2016–Now: .NET Core → .NET 5+ (Modern .NET)
-.NET was originally Windows-only.
-
-Microsoft open-sourced and rebuilt it as .NET Core, then unified everything into .NET 5, 6, 7, 8…
-
-Fully cross-platform: Windows, Linux, macOS
-
-Can build:
-
-Web apps (ASP.NET Core)
-
-Desktop & mobile (MAUI, WPF, WinForms)
-
-Games (Unity uses C#)
-
-Browser apps (Blazor)
-
-APIs and CLIs
+- CLR can run C#, F# and VB.NET
+- and it compiles all these languages to IL (Intermediate Language)
+- which is the converted to native machine code at runtime using JIT compiler or it does it ahead of time using AOT compiler
