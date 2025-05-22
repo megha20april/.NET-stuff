@@ -38,16 +38,17 @@
 - C# – A new, modern language
 - ASP.NET, WinForms, WPF – For web and GUI apps
 - Garbage collection and memory safety baked in
+- Windows only.
 
 > 🧠 It was Microsoft’s clean break from the past: safe, managed, and cross-language.
 
 ## 🌐 7. 2016–Now: .NET Core → .NET 5+ (Modern .NET)
 
-- .NET was originally Windows-only.
-- Microsoft open-sourced and rebuilt it as .NET Core, then unified everything into .NET 5, 6, 7, 8…
+- .NET Framework was originally Windows-only.
+- Microsoft open-sourced it and rebuilt it from scratch as .NET Core, then after some versions of it, it dropped the "Core" from its name and rebranded it as just .NET 5 and beyond.
 - Fully cross-platform: Windows, Linux, macOS
 - Can build:
-    Web apps (ASP.NET Core)
+    Web apps (ASP.NET Core, new ver of ASP.NET)
     Desktop & mobile (MAUI, WPF, WinForms)
     Games (Unity uses C#)
     Browser apps (Blazor)
