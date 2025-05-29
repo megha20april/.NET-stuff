@@ -20,3 +20,5 @@ MVC is a software architecture pattern (design pattern) that structures an appli
 
 ### Simplified Flow:
 > Request → Controller → Model → View → Response
+
+![image](https://github.com/user-attachments/assets/65994045-cd93-453b-b18b-616a6034a853)
