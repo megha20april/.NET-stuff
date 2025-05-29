@@ -1,11 +1,4 @@
 
-## .NET SDK vs .NET runtime
-
-- sdk contains all the libraries, compiler, command line tools, project templates and so on... required to develop .net applications. For developers.
-- while on the other hand, .net runtime contains things like CLR, BCL, GC and JIT which are required to execute the applications only. For end users.
-
----
-
 ## .csproj File of the application
 
 ```xml
