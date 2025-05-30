@@ -80,6 +80,7 @@ public class UsersController : Controller
 #### Common IActionResult Implementations
 As shown in the hierarchy below, various result types implement IActionResult either directly or through ActionResult:
 
+```
 IActionResult --> containes ExecuteResultAsync() which is implemented by everyone.
 ├── ActionResult (abstract) --> implements the methods of the interface, but its methdods get overriden
 │   ├── ViewResult --> by View(), renders view templates
@@ -97,6 +98,7 @@ IActionResult --> containes ExecuteResultAsync() which is implemented by everyon
 │   │   └── CreatedResult
 │   └── EmptyResult   ---> returns nothing, we do this since most controller actions must return an IActionResult so that MVC knows what to send back to the client.
 └── Other implementations...
+```
 
 #### Result Processing
 
