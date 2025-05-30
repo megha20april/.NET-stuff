@@ -66,3 +66,11 @@ public class UsersController : Controller
     }
 }
 ```
+
+### IActionResult
+
+- Responses of controllers can be anything from a simple status code, plain text, a view (HTML), a file, or even a JSON object.
+- These responses are encapsulated in objects known as Action Results.
+- an interface that represents the response object type of an action method.
+- In ASP.NET Core, the response objects implement IActionResult
+- It is a base class of all the response types an action method returns.
