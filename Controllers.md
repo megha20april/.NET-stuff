@@ -143,3 +143,11 @@ Default Convention:
 - UsersController.Details(int id) → GET /Users/Details/5
 - UsersController.Create() → GET /Users/Create
 
+---
+
+### What happens when we do View()
+
+ASP.NET MVC looks for a .cshtml file in:
+`/Views/{ControllerName}/{ActionName}.cshtml`
+ex.
+`/Views/Home/About.cshtml` through About() action method of HomeController
