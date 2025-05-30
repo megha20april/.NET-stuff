@@ -1,3 +1,20 @@
+## Controllers
+
+- A controller file in ASP.Net Core is a C# class that group related request handlers (like the router did in express) together.
+- It's a way to organize routes into separate modules.
+
+```
+Project/
+├── Controllers/
+│   ├── HomeController.cs      // Handles /Home routes
+│   ├── UsersController.cs     // Handles /Users routes
+│   └── ProductsController.cs  // Handles /Products routes
+```
+
+- class names must match filename.
+- The route prefix comes from removing "Controller" from the name ex. UsersController -> /Users
+
+---
 
 ## Controller Base Classes
 
@@ -29,3 +46,23 @@ public class ApiController : ControllerBase
 }
 ```
 ControllerBase is lighter - it excludes view-relateedd fnctionality since APIs don't render HTML.
+
+---
+
+## Action Methods
+
+- These methods are public methods inside controller. They handle all the routes of your controller.
+- equivalent to `router.<method>('/<action>', handler);` in express
+- ASP.NET Core action:
+
+```csharp
+public class UsersController : Controller
+{
+    // This method is an "action"
+    public IActionResult Index()
+    {
+        var users = GetUsersFromDB();
+        return Json(users);
+    }
+}
+```
