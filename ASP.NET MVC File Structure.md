@@ -55,7 +55,10 @@ contains the config files for your proj.
 
 ## launchSettings.json
 
-- used by your IDE, how to launch your web application in development env.
+- used by your IDE only in development env.
+- to know how to host the server onto your system in dev/debug mode.
+
+
 - $schema: provides a url to a JSON schema, which lets the IDEs validate the structure of this file and thus give suggestions and errors.
 
 - profiles - each profile defined in this section provides a diff way to launch the application during development. Profiles can specify settings like the application url, env variables, whether to lauch the browser or not, and more. By default, it comes with three profiles:
