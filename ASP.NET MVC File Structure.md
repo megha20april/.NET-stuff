@@ -1,6 +1,11 @@
 
 ## .csproj File of the application
 
+- meta-data of your application
+- it defines all the dependencies used and other imp stuff
+- tells how to compile your application code
+- if we don't list a package here, then that dependency gets disconnected, even if the package exists on disk.
+
 ```xml
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
