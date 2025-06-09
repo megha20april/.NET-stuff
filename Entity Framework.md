@@ -26,6 +26,76 @@ An ORM Framework like Entity Framework or EF Core can do all of the above for us
 
 ___
 
+## DbContext
+- This is a class whose instance represents a session between your app and the database.
+- Basically it's an object that has a lot of features (props and methods) that are needed to track changes in our server-side data models (tables of our model classes), talk to DB and apply changes.
+- It needs DbContextOptions to know how to connect to the right database.
+- An instance of DbCOntext has a basic structure like this:
+```csharp
+var ctx = new DbContext(options);
+```
+```
+DbContext ctx = {
+    Database: { ... },                // manages the database connection
+    ChangeTracker: { ... },          // tracks changes in our entities that we provide to it, but it
+                                    // can't do that right now, since we have not attached any entity to it
+    Model: null,                     // no metadata about entity types because none were declared
+    DbSet<T>: not available,         // no entities are known, so we can't query them
+    Configuration: {                     // provided through options object
+        Provider: SQL Server / SQLite / etc,
+        ConnectionString: "...",
+        LazyLoading: false,
+        etc.
+    },
+    Services: { ... }                // lots of EF internal services like query builder, command executors etc..
+}
+```
+
+- now after we make a subclass of it called MyDbContext to register it with our server-side entities
+- these entities can then be synced with our database by tracking their changes.
+
+```csharp
+  var ctx = new MyDbContext(options);
+```
+```
+MyDbContext ctx = {
+    Users: DbSet<User>,               // table-like object for querying Users (table of User Type objects)
+    Products: DbSet<Product>,         // a gateway to query, insert, delete Product rows
+    Database: { ... },                // manages connection, migrations, transactions etc.
+    ChangeTracker: { ... },          // tracks add, update, delete transactions
+    Model: {                          // meta data about our provided entities
+        EntityTypes: [User, Product],
+        Relationships: [...],         // relationships like foreign keys etc.
+        Configurations: {
+            User -> Table: Users,
+            Product -> Table: Products,
+        }
+    },
+    Configuration: {
+        Provider: SQL Server,
+        ConnectionString: "...",
+        LazyLoading: true/false,
+        etc.
+    },
+    Services: {
+        IModelCustomizer, IQueryCompiler, ...
+    }
+}
+```
+- these Users and Products entities are mapped to our database now.
+- EF Core knows what class maps to what table, and how to convert queries/changes accordingly.
+- So when you run:
+
+```csharp
+ctx.Users.Add(new User { Name = "John" });
+ctx.SaveChanges();
+```
+EF Core:
+1. Tracks the new User entity.
+2. Generates SQL: INSERT INTO Users (Name) VALUES ('John')
+3. Runs it on the connected DB.
+  
+---
 
 ## DbContextOptions
 - this is a class that builds our options object which is used to set the configurations for our DbContext, to connect it to our database.
