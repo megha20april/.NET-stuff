@@ -23,3 +23,15 @@ An ORM Framework like Entity Framework or EF Core can do all of the above for us
 
 - Code-First Approach: In this approach, the data model (classes) is created first, and Entity Framework Core generates the database schema based on the model.
 - Database-First Approach: This approach is used when an existing database is available. Entity Framework Core can generate the data model (classes) based on the database schema.
+
+___
+
+
+## DbContextOptions
+- this is a class that builds our options object which is used to set the configurations for our DbContext, to connect it to our database.
+- It basically tells the DbContext all the useful configs used to connect to our db.
+- This options object is then passed to the constructor of DbContext, to bind that config object to that specific context.
+- this object also contains the db provider specific configurations.
+
+- Now when we instantiate this options object, why do we need to pass a Context type to it? (why is the constructor generic? what special does it do after knowing the particular context type)
+- it is used for compile-time error checking and thus ensures type safety. It ensures that we don't end up passing the wrong options object to a context (when we have multiple contexts in our application). Because each options object has provider-specific configs, that might break the connection in another DbContext. It saves runtime errors.
