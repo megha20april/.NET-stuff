@@ -30,7 +30,7 @@ ___
 - This is a class whose instance represents a session between your app and the database.
 - Basically it's an object that has a lot of features (props and methods) that are needed to track changes in our server-side data models (tables of our model classes), talk to DB and apply changes.
 - It needs DbContextOptions to know how to connect to the right database.
-- An instance of DbCOntext has a basic structure like this:
+- An instance of DbCOntext has a basic structure like this: (this is a simplified version)
 ```csharp
 var ctx = new DbContext(options);
 ```
@@ -103,5 +103,62 @@ EF Core:
 - This options object is then passed to the constructor of DbContext, to bind that config object to that specific context.
 - this object also contains the db provider specific configurations.
 
-- Now when we instantiate this options object, why do we need to pass a Context type to it? (why is the constructor generic? what special does it do after knowing the particular context type)
+
+- Now when we instantiate this options object, ***why do we need to pass a Context type to it?*** (why is the constructor generic? what special does it do after knowing the particular context type)
 - it is used for compile-time error checking and thus ensures type safety. It ensures that we don't end up passing the wrong options object to a context (when we have multiple contexts in our application). Because each options object has provider-specific configs, that might break the connection in another DbContext. It saves runtime errors.
+
+---
+
+# DbSet
+- DbSet<T> is a class provided by EF Core.
+- Each DbSet<T> represents one table in your database.
+- It provides methods to:
+    - 🔍 Query data (.ToList(), .Where(), .Find(), etc.)
+    - ➕ Add new rows (.Add(), .AddRange())
+    - ❌ Remove rows (.Remove())
+    - 📝 Update rows (just modify the object, and EF will track it)
+
+> 🔁 You don't call SQL yourself — DbSet<T> handles that by translating your LINQ queries into SQL behind the scenes.
+
+
+When I do this:
+```cssharp
+var user = MyDbContext.Users.First();
+```
+
+Here’s what happens:
+- context.Users gives you a DbSet<User> object.
+- You run LINQ (First()) on it.
+- Under the hood, EF Core:
+    - Builds an expression tree of your query
+    - Translates it into raw SQL: SELECT TOP 1 * FROM Users
+    - Sends that to the DB
+    - Maps the result back into a User object
+ 
+### Basic Structure of `DbSet<T>` Instance (this is a simplified version)
+
+```
+DbSet<User> users = {
+    EntityType: User,                     // the model class this set works on
+    Context: MyDbContext,                // the parent context that owns this DbSet
+    Provider: SQL Server / SQLite / etc, // inherited from the context through the provided options
+    QueryCompiler: { ... },              // turns LINQ queries into SQL
+    ChangeTracker: { ... },              // tracks changes to User objects
+    Data: [not directly visible],        // fetched on demand via queries
+    Methods: {
+        Add(User u), AddRange(...),
+        Remove(User u),
+        Find(id),
+        ToList(),
+        Where(predicate),
+        etc...
+    }
+}
+```
+
+So when i do something like:
+```csharp
+users.Add(new User { Name = "Meg" });
+```
+- It notifies the ChangeTracker and marks that entity as Added.
+- Now when we run SaveChanges(), EF core builds an `INSERT INTO Users...` SQL and sends it
