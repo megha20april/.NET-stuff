@@ -34,10 +34,11 @@ migrationBuilder.CreateTable(
     });
 ```
 
-- It then executes these pending changes against our database on `dotnet ef database update`
 - NOW, EF takes a snapshot of our updated model and saves a file called `ModelSnapshot.cs`
 - This snapshot is used next time to detect what changed.
 - EF basically takes snapshot after each migration.
+  
+- It then executes these pending changes against our database on `dotnet ef database update` and finalizes everything.
 
 ---
 
