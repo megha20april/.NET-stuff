@@ -73,6 +73,20 @@ migrationBuilder.AddColumn<string>(
 
 ---
 
+### Remove 
+- The `dotnet ef migrations remove` command removes the most recent migration that has not yet been applied to the database.
+- Use this when:
+    - You made a mistake in your model.
+    - You ran add migration too early.
+    - You want to clean up your source code and EF's internal state
+    - **You haven’t run update-database yet** (i.e., migration isn’t applied to the DB).
+- THis command only deletes the last pending migrations files and its accompanying .Designer.cs file
+- And the migration file is then reverted to the previous migration state
+- It DOES NOT revert changes in your model classes, those should be manually removed or fixed.
+- It DOES NOT undo applied migrations in the database, those should also be manually handled.
+
+---
+
 # Common Commands
 
 | Command                           | What It Does                                       |
