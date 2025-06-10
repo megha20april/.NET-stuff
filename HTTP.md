@@ -34,6 +34,48 @@ Here are the main ones you’ll use as a web dev:
 
 ---
 
+## 💾 Caching
+
+* Caching is when the browser (or a proxy server) saves a copy of a response (like a webpage or API result), so it doesn’t need to ask the server again next time.
+* **GET** requests can be cached by browsers and proxies to save load time.
+* **POST/PUT/DELETE** are **not cached** (by default) because their job is to change data, usually there is no useful response to cache.
+* You can use headers like `Cache-Control` and `ETag` to manage caching.
+
+---
+
+## 🔖 Bookmarking
+
+Here, Bookmarking means the bookmark option in the browsers.
+Only **GET** requests can be bookmarked because all data is in the URL.
+If we try to bookmark a let's say, Post request, it won't be able to capture the request data since it's not included in the url.
+Hence, it'll be meaningless.
+when we bookmark a url in browsers, they always make get request to it by default. Hence, every request other than GET can't be bookmarked.
+
+You can bookmark this:
+
+```
+https://mysite.com/entries?page=2&filter=important
+```
+
+But you **can’t bookmark a POST request**, because it doesn’t show in the address bar.
+
+---
+
+## ✅ Idempotency (cool word, simple idea)
+
+An operation is **idempotent** if doing it multiple times gives the **same result**.
+It's a behavior of methods.
+We can use this to keep in mind that we shouldn't mindlessly retry non-indempotent methods. Since, on each retry they can have different outcomes.
+
+| Request | Idempotent? | Why?                                         |
+| ------- | ----------- | -------------------------------------------- |
+| GET     | ✅           | Reading is safe.                             |
+| PUT     | ✅           | Updating to the same data does nothing new.  |
+| DELETE  | ✅           | Deleting something twice is still “deleted”. |
+| POST    | ❌           | Submitting twice creates duplicates.         |
+
+---
+
 ## 🔍 Let’s Break That Down
 
 ### 🔵 1. **GET**
@@ -43,7 +85,7 @@ Here are the main ones you’ll use as a web dev:
 
   ```
   /entries?page=2&sort=date
-  or
+              or
   /:id
   ```
 * Can be **bookmarked** (since all data is in the URL).
@@ -66,8 +108,9 @@ Here are the main ones you’ll use as a web dev:
 ### 🟢 3. **PUT**
 
 * Used to **replace** an existing resource completely.
+* It replaces the whole resource, and thus we have to send the entire object.
 * Sends data in the **body**.
-* Not cached or bookmarked.
+* Not cached or bookmarked because of same reasons as POST.
 * **Idempotent**: sending the same PUT request twice has the same effect.
 
 ---
@@ -75,6 +118,7 @@ Here are the main ones you’ll use as a web dev:
 ### 🟣 4. **PATCH**
 
 * Like PUT, but it **partially updates** a resource.
+* It only updates and touches a part of a resource, thus we send only changed fields.
 * Used for performance or targeted changes.
 * Also idempotent (doing it twice = same result).
 
@@ -83,9 +127,43 @@ Here are the main ones you’ll use as a web dev:
 ### 🔴 5. **DELETE**
 
 * Deletes a resource.
-* Usually uses the **ID in the URL**.
+* Usually uses the **ID in the URL** to specify what to delete.
 * Not cached or bookmarked.
 * Idempotent: deleting something twice doesn't cause an error.
+
+---
+
+### 🔵 6. **HEAD**
+
+* Used to only get the response headers without the bodey.
+* Ex.
+```
+  HEAD /large-video.mp4
+
+  Response:
+  200 OK
+  Content-Length: 1948293
+  Content-Type: video/mp4
+```
+* Useful when checking file size before downloading or validating if a URL is still valid/alive etc..
+* It's cached and idempotent since we get the same result each time.
+* Though it's not bookmarked, because when we bookmark a url in browsers, they always make get request to it by default. Hence, every request other than GET can't be bookmarked.
+
+---
+
+### 🟡 7. **OPTIONS**
+
+* To find out what HTTP methods (GET, POST, etc.) are supported on a specific resource.
+* Ex:
+```
+OPTIONS /entries
+
+Response:
+Allow: GET, POST, OPTIONS
+```
+* Browsers also first internally send this request to a resource, if the method wanted by the client is even allowed on that resource or not.
+* No need to cache this since it's not useful and doesn't need to be accessed again and again.
+* It is idempotent since it has the same response every time.
 
 ---
 
@@ -108,43 +186,6 @@ Content-Type: application/json
   "content": "It was sunny"
 }
 ```
-
----
-
-## 💾 Caching
-
-* **GET** requests can be cached by browsers and proxies to save load time.
-* **POST/PUT/DELETE** are **not cached** (by default).
-* You can use headers like `Cache-Control` and `ETag` to manage caching.
-
----
-
-## 🔖 Bookmarking
-
-Only **GET** requests can be bookmarked because all data is in the URL.
-
-You can bookmark this:
-
-```
-https://mysite.com/entries?page=2&filter=important
-```
-
-But you **can’t bookmark a POST request**, because it doesn’t show in the address bar.
-
----
-
-## ✅ Idempotency (cool word, simple idea)
-
-An operation is **idempotent** if doing it multiple times gives the **same result**.
-
-| Request | Idempotent? | Why?                                         |
-| ------- | ----------- | -------------------------------------------- |
-| GET     | ✅           | Reading is safe.                             |
-| PUT     | ✅           | Updating to the same data does nothing new.  |
-| DELETE  | ✅           | Deleting something twice is still “deleted”. |
-| POST    | ❌           | Submitting twice creates duplicates.         |
-
----
 
 ## 🎯 Use-Cases Summary
 
