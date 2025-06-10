@@ -28,7 +28,7 @@ Think of it like:
 - Since we know that after each request, the DbContext is disposed and a new one is created, so whatever we add in this method will be executed every time a new DbContext is created.
 - It takes a `ModelBuilder` parameter
 
-###### ModelBuilder Class
+##### ModelBuilder Class
 - this object basically is used to build a IModel object (an immutable, compiled, read-only structure) that contains all the configurations in which our c# classes are mapped to our database.
 
 - for ex: 
@@ -43,3 +43,5 @@ Think of it like:
     ```
     - So, we can also use this explicit way to register entities to the model builder.
     - After all this config is done, we call `modelBuilder.FinalizeModel()` to finalize the model, and it returns an IModel object. which is then used by EF Core to perform database operations through our classes.
+ 
+- Now each entity in modelBuilder has a `.HasData()` method, which tells EF to add the defined records into the entity when first initializing it.
