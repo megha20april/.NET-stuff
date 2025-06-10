@@ -22,7 +22,7 @@ dotnet ef migrations add InitialCreate
 ```
 
 - EF tries to compares this new model with a previous model,but finds nothing, Thus, establishes that this is the initial migration
-- Then it creates a C# file `InitialCreate.cs` in Migrations/
+- Then it creates a C# file `InitialCreate.cs` in Migrations/       these files contain two methods usually, `Up()` (to apply changes) and `Down()` (to revert those changes)
 
 ```csharp
 migrationBuilder.CreateTable(
@@ -80,7 +80,7 @@ migrationBuilder.AddColumn<string>(
     - You ran add migration too early.
     - You want to clean up your source code and EF's internal state
     - **You haven’t run update-database yet** (i.e., migration isn’t applied to the DB).
-- THis command only deletes the last pending migrations files and its accompanying .Designer.cs file
+- THis command only deletes the last pending migrations files and its accompanying .Designer.cs file (in older versions of asp.net, it only contained some metadata)
 - And the migration file is then reverted to the previous migration state
 - It DOES NOT revert changes in your model classes, those should be manually removed or fixed.
 - It DOES NOT undo applied migrations in the database, those should also be manually handled.
