@@ -198,3 +198,6 @@ Content-Type: application/json
 | Get available methods/options  | OPTIONS      |
 
 ---
+
+![image](https://github.com/user-attachments/assets/573a4153-6565-4067-bc3a-36e4f7b3bf49)
+
