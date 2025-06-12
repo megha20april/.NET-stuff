@@ -110,3 +110,9 @@ It renders to plain HTML with extra data- attributes:
 This is now a special form: it will be caught by jQuery.Unobtrusive.Ajax.js.
 who reads them and sends a AJAX request using $.ajax()
 and injects response HTML into a DOM element
+
+---
+
+- Although these AJAX helpers look simpler but they are not that flexible.
+- Hence, Explicit JS (jQuery) is more common and preferred today because throught them you control every part of the request.
+- Microsoft considers these helpers legacy and has removed them from ASP.NET CORE as a default functionality.
