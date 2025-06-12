@@ -116,3 +116,95 @@ and injects response HTML into a DOM element
 - Although these AJAX helpers look simpler but they are not that flexible.
 - Hence, Explicit JS (jQuery) is more common and preferred today because throught them you control every part of the request.
 - Microsoft considers these helpers legacy and has removed them from ASP.NET CORE as a default functionality.
+
+
+Example Flow:
+
+### 1. 🧱 Controller Action — Return Partial View
+
+In your `DiaryEntriesController.cs`:
+
+```csharp
+[HttpPost]
+public IActionResult CreateAjax(DiaryEntry entry)
+{
+    if (ModelState.IsValid)
+    {
+        _context.DiaryEntries.Add(entry);
+        _context.SaveChanges();
+
+        // Return the newly added entry as a partial view
+        return PartialView("_DiaryEntryPartial", entry);
+    }
+
+    return BadRequest(); // Optional: handle errors
+}
+```
+
+---
+
+### 2. 🧱 Partial View — `_DiaryEntryPartial.cshtml`
+
+Create this in `Views/DiaryEntries/`:
+
+```html
+<div class="entry" id="entry-@Model.Id">
+    <h3>@Model.Title</h3>
+    <p>@Model.Content</p>
+    <small>@Model.CreatedAt.ToString("g")</small>
+    <hr />
+</div>
+```
+
+---
+
+### 3. 🧱 Main View — `Index.cshtml`
+
+```html
+<div id="entry-list">
+    @foreach (var entry in Model)
+    {
+        @Html.Partial("_DiaryEntryPartial", entry)
+    }
+</div>
+
+<form id="ajax-form">
+    <input type="text" name="Title" placeholder="Title" required />
+    <textarea name="Content" placeholder="Content" required></textarea>
+    <button type="submit">Add Entry</button>
+</form>
+```
+
+---
+
+### 4. 📜 Add jQuery AJAX Script
+
+At the bottom of `Index.cshtml`:
+
+```html
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#ajax-form').submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '/DiaryEntries/CreateAjax',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#entry-list').prepend(result); // Add new entry to the top
+                        $('#ajax-form')[0].reset(); // Clear form
+                    },
+                    error: function () {
+                        alert("Something went wrong.");
+                    }
+                });
+            });
+        });
+    </script>
+}
+```
+
