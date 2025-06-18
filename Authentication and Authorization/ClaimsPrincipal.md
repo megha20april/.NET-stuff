@@ -1,4 +1,12 @@
 
+# Security Context 
+
+security context represents:
+> "All the security-related information associated with a subject (usually a user) for the duration of a process or request."
+
+- In ASP.NET Core's context, The security context refers to all the information the framework has about who the user is, what they’re allowed to do, and how they were authenticated during a request.
+- And .NET framework represents thsi security context using the ClaimsPrincipal Object as it has all the info about a user.
+
 # ClaimsPrincipal Object
 
 - It is provided by .NET for its authentication system.
