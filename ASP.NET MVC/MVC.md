@@ -27,4 +27,22 @@ MVC is a software architecture pattern (design pattern) that structures an appli
 ### Example Flow run
 Router's job is to map a request path/url to a function
 
+#### MPAs --> Multi Page Applications
+
+In old-school web apps like ones built using:
+EJS / Razor / JSP / PHP, etc.
+All rendering happens on the server
+
 Request: GET /users --> Router will map it to a function inside the controller --> getUsers(): this will interact with a model let's say, User --> the model works with the database (this is done using ORM or SQL) --> now the output, here a list of users, is returned to the controller --> controller then gives that output to views --> views have the responsibility of presenting that data --> view generates the html + css with the data embedded in it --> which is again returned back to the controller and then ultimately to the client
+
+#### SPAs --> Single Page Applications
+
+- Here routing happens two times, on client and on server side.
+- The frontend and backend are decoupled.
+- The frontend is usually served as static files (HTML, CSS, JS).
+- Routing happens on the client (browser) using libraries like React Router, Vue Router, etc.
+- Data is fetched separately via API calls.
+
+Click /profile → React Router matches path → Loads Profile component → Calls backend API (like /api/user/123) → Frontend request → here comes our Server router which maps the request to → Controller → which then Returns JSON (by interacting with models and stuff) → Frontend renders UI using this returned data
+
+> for ex., in node.js the express can be seen as a server router
