@@ -80,6 +80,7 @@ Instance constructor executed
 
 * You can't define a static constructor with `public`, `private`, or any access modifier. It is **always private** by default.
 * It's used commonly for **logging setups**, **static configuration**, **singleton initialization**, etc.
+* In the lifecycle of a class, static constructor executes one and only one time.
 
 ### More Examples
 
